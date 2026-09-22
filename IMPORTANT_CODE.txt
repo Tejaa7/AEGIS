@@ -1,0 +1,98 @@
+========================================
+AEGIS MEDIA UPLOAD
+IMPORTANT CODE
+========================================
+
+1. FILE CONFIGURATION
+---------------------
+
+MAX_IMAGE_SIZE = 10 * 1024 * 1024
+MAX_AUDIO_SIZE = 50 * 1024 * 1024
+MAX_VIDEO_SIZE = 200 * 1024 * 1024
+
+Allowlisted extensions:
+IMAGE: .jpg .jpeg .png .webp
+VIDEO: .mp4 .avi .mov .mkv .webm
+AUDIO: .mp3 .wav .m4a .aac .ogg
+
+Source of truth: src/constants/fileConfig.js
+Do not duplicate these values throughout the project.
+
+
+2. FILE VALIDATION
+------------------
+
+Allowlist only. Empty files rejected. Size checked per media category.
+Extension must be on the allowlist. If the browser reports a MIME type,
+it must also be on the allowlist and must match the extension category.
+
+Client-side validation is not a security boundary. The backend must
+independently validate uploaded files.
+
+
+3. MEDIA TYPE DETECTION
+-----------------------
+
+Category is derived from the allowlisted extension first.
+If MIME is present, extension category and MIME category must match.
+Mismatch => reject. Unknown extension => reject. No URL-based ingest.
+
+
+4. SECURE MEDIA PREVIEW
+-----------------------
+
+const objectUrl = URL.createObjectURL(file);
+Preview with <img />, <video />, or <audio /> only.
+Revoke with URL.revokeObjectURL() when the file changes or the
+preview unmounts. Do not upload solely to generate a local preview.
+Do not render uploads as HTML or JavaScript. Do not use innerHTML.
+
+
+5. FORM DATA UPLOAD
+-------------------
+
+const formData = new FormData();
+formData.append("media", file);
+POST /api/analyze
+Do not set the multipart boundary manually.
+Do not convert large video files to base64.
+
+
+6. API SERVICE
+--------------
+
+src/services/api.js
+analyzeMedia(file, { onProgress, signal })
+Base URL from import.meta.env.VITE_API_BASE_URL
+XHR used only so upload progress can be reported.
+Timeouts, abort, and HTTP 400/401/403/413/429/500 mapped to
+user-facing messages. No stack traces, paths, or secrets.
+
+
+7. ERROR HANDLING
+-----------------
+
+User-facing codes include unsupported file, invalid MIME, invalid
+extension, file too large, empty file, network error, timeout,
+backend unavailable, and unexpected JSON.
+UI strings must not include server internals.
+
+
+8. SECURITY NOTES
+-----------------
+
+- Frontend validation is not a security boundary.
+- Never trust filename, extension, or browser MIME type.
+- Never use the original filename as a server filesystem path.
+- Never construct backend paths from user-controlled filenames.
+- Display filenames with React text rendering only.
+- Do not use dangerouslySetInnerHTML.
+- Do not fetch arbitrary media URLs (SSRF).
+- Do not use Access-Control-Allow-Origin: * as a shortcut.
+- React does not provide CSRF protection.
+- One file at a time; disable Analyze while uploading/processing.
+- No secrets, API keys, JWT secrets, or credentials in the frontend.
+- Mock API (VITE_USE_MOCK_API) must never be presented as a real
+  deepfake prediction.
+- Frontend security controls provide defense in depth, but backend
+  validation and server-side security controls are mandatory.
