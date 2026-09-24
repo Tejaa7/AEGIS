@@ -1,5 +1,5 @@
-import { validateMediaFile } from "../src/utils/fileValidation.js";
-import { MAX_IMAGE_SIZE } from "../src/constants/fileConfig.js";
+import { validateMediaFile } from "../frontend/src/shared/utils/fileValidation.js";
+import { MAX_IMAGE_SIZE } from "../frontend/src/shared/constants/fileConfig.js";
 
 function fakeFile({ name, type, size }) {
   return { name, type, size };

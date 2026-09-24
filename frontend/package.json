@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test:validation": "node scripts/validate-file-checks.mjs"
+    "test:validation": "node ../scripts/validate-file-checks.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

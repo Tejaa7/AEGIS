@@ -1,11 +1,11 @@
 import { useId, useRef, useState } from "react";
-import { ACCEPT_ATTRIBUTE } from "../../constants/fileConfig.js";
-import { analyzeMedia } from "../../services/api.js";
-import { formatFileSize, validateMediaFile } from "../../utils/fileValidation.js";
-import DetectionResult from "../DetectionResult/DetectionResult.jsx";
-import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
-import MediaPreview from "../MediaPreview/MediaPreview.jsx";
-import UploadProgress from "../UploadProgress/UploadProgress.jsx";
+import { ACCEPT_ATTRIBUTE } from "../../shared/constants/fileConfig.js";
+import { analyzeMedia } from "../../shared/services/api.js";
+import { formatFileSize, validateMediaFile } from "../../shared/utils/fileValidation.js";
+import DetectionResult from "./DetectionResult.jsx";
+import ErrorMessage from "./ErrorMessage.jsx";
+import MediaPreview from "./MediaPreview.jsx";
+import UploadProgress from "./UploadProgress.jsx";
 
 const STATUS = {
   IDLE: "idle",

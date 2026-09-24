@@ -1,4 +1,4 @@
-import MediaUploader from "../../components/MediaUploader/MediaUploader.jsx";
+import MediaUploader from "../media-upload/MediaUploader.jsx";
 
 function Home() {
   return (

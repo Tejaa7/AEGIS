@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { MEDIA_CATEGORIES } from "../../constants/fileConfig.js";
+import { MEDIA_CATEGORIES } from "../../shared/constants/fileConfig.js";
 
 function MediaPreview({ file, category }) {
   const objectUrl = useMemo(() => {
